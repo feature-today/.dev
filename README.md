@@ -95,4 +95,4 @@ Powered by [`scripts/run-each.mjs`](./scripts/run-each.mjs) and [`scripts/git-ea
 
 ## License
 
-[AGPL-3.0-or-later](./LICENSE)
+[AGPL-3.0-or-later](./LICENSE). See [LICENSING.md](./LICENSING.md) for the org-wide licensing policy (what it allows, what it requires, FAQ).
