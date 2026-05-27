@@ -1,0 +1,9 @@
+{
+  "repos": [
+    ".github",
+    "website",
+    "my",
+    "common",
+    "server"
+  ]
+}

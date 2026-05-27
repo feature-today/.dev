@@ -1,0 +1,57 @@
+{
+  "folders": [
+    {
+      "name": "🧰 .dev",
+      "path": "."
+    },
+    {
+      "name": "📦 .github",
+      "path": "../.github"
+    },
+    {
+      "name": "🌐 website",
+      "path": "../website"
+    },
+    {
+      "name": "✨ my",
+      "path": "../my"
+    },
+    {
+      "name": "🧩 common",
+      "path": "../common"
+    },
+    {
+      "name": "🖥️  server",
+      "path": "../server"
+    }
+  ],
+  "settings": {
+    "files.eol": "\n",
+    "files.insertFinalNewline": true,
+    "files.trimTrailingWhitespace": true,
+    "editor.formatOnSave": false,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.oxc": "explicit"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[json]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "[jsonc]": {
+      "editor.defaultFormatter": "oxc.oxc-vscode"
+    },
+    "github.copilot.chat.commitMessageGeneration.instructions": [
+      {
+        "text": "Generate commit messages in English only. Use Conventional Commits format with a gitmoji: `<type>(<scope>): <emoji> <description>`. Scope is optional; when used, use only the allowed scopes for the active repository — each folder defines its own in its `.vscode/settings.json` (`conventionalCommits.scopes`). Types and their emoji: feat → ✨, fix → 🐛, docs → 📝, refactor → ♻️, test → ✅, chore → 🔧, perf → ⚡️, style → 💄, ci → 👷, build → 📦️, revert → ⏪️. Always include exactly ONE emoji. Description ≤72 chars, lowercase, imperative mood, no trailing period. Multiple changes → bullet list in body."
+      }
+    ]
+  }
+}
