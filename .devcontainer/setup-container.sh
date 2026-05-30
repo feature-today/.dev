@@ -36,6 +36,19 @@ for repo in $REPOS; do
 done
 
 if command -v pnpm >/dev/null 2>&1; then
+  # Configure the shared pnpm store volume.
+  # Writing directly to ~/.npmrc avoids invoking `pnpm config set` which in
+  # pnpm 10/11 fails with an error when PNPM_HOME/bin is not yet in PATH
+  # (the case at postCreateCommand time before shell profiles are sourced).
+  PNPM_STORE_VOL="/.pnpm-store"
+  if [ -d "$PNPM_STORE_VOL" ]; then
+    sudo chown -R node:node "$PNPM_STORE_VOL" 2>/dev/null || true
+  fi
+  PNPM_RC="${HOME}/.npmrc"
+  if ! grep -q "^store-dir" "$PNPM_RC" 2>/dev/null; then
+    printf 'store-dir=%s\n' "$PNPM_STORE_VOL" >> "$PNPM_RC"
+  fi
+
   for repo in $REPOS; do
     target="/workspaces/${repo}"
     if [ -f "${target}/package.json" ]; then

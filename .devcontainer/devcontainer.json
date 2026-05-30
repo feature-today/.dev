@@ -17,7 +17,10 @@
     "source=${localWorkspaceFolder}/../website,target=/workspaces/website,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/../my,target=/workspaces/my,type=bind,consistency=cached",
     "source=${localWorkspaceFolder}/../common,target=/workspaces/common,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../server,target=/workspaces/server,type=bind,consistency=cached"
+    "source=${localWorkspaceFolder}/../server,target=/workspaces/server,type=bind,consistency=cached",
+    // Shared pnpm store volume — persists across rebuilds and between sibling devcontainers.
+    // store-dir is configured in setup-container.sh via ~/.npmrc (pnpm 10/11 compatible).
+    "source=global-devcontainer-pnpm-store,target=/.pnpm-store,type=volume"
   ],
   "containerEnv": {
     "FT_ORG": "feature-today",
@@ -50,8 +53,7 @@
     },
     "ghcr.io/helpers4/devcontainer/peon-ping:1": {
       "packs": "peasant_fr,peon_fr,warcraft-peon"
-    },
-    "ghcr.io/joshuanianji/devcontainer-features/mount-pnpm-store:1": {}
+    }
   },
   "customizations": {
     "vscode": {
