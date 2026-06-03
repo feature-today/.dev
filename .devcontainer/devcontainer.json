@@ -1,5 +1,5 @@
 {
-  "name": "feature-today ✨",
+  "name": "Feature Today",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
   // Orchestrator devcontainer for the feature-today organization.
   //
@@ -24,12 +24,13 @@
   ],
   "containerEnv": {
     "FT_ORG": "feature-today",
-    "FT_REPOS": ".github website my common server"
+    "FT_REPOS": ".github website my common server",
+    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
   // GH_TOKEN: forwards the host gh CLI token into the container so gh and the
   // GitHub VS Code extensions are authenticated out of the box.
   "remoteEnv": {
-    "GH_TOKEN": "${localEnv:GH_TOKEN}"
+    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
   "features": {
     // moby:false → use upstream docker-ce CLI; required since the base image
