@@ -1,0 +1,10 @@
+[
+  "devcontainer",
+  "workspace",
+  "scripts",
+  "agents",
+  "ci",
+  "docs",
+  "deps",
+  "phases"
+]
