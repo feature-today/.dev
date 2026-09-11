@@ -1,8 +1,8 @@
 {
   "name": "feature-today",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
-  "workspaceFolder": "/workspaces/.dev",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/.dev,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/feature-today-dev",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/feature-today-dev,type=bind,consistency=cached",
   "mounts": [
     // ── sibling repos ────────────────────────────────────────────────────────
     "source=${localWorkspaceFolder}/../.github,target=/workspaces/.github,type=bind,consistency=cached",
