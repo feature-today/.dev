@@ -154,29 +154,27 @@ The `auto-header` devcontainer feature (or `psi-header` VS Code extension) is co
 ```
 .dev/
 ├── .devcontainer/
-│   ├── devcontainer.json       # Cross-repo dev environment
-│   └── setup-container.sh      # postCreateCommand: clone-fallback + install
+│   ├── devcontainer.json       # Named Docker volume per sibling + postCreateCommand
+│   └── setup-container.sh      # postCreateCommand: clone-into-volume-if-empty
 ├── .vscode/
 │   └── settings.json           # Repo-specific overrides (scopes)
-├── scripts/
-│   ├── repos.mjs               # Source of truth (reads repos.json)
-│   ├── run-each.mjs            # Run a pnpm script in every sibling repo
-│   └── git-each.mjs            # Run a git command in every sibling repo
 ├── feature-today.code-workspace  # Multi-root workspace + shared settings
-├── repos.json                  # List of sibling repos
-├── package.json                # Cross-repo orchestration scripts
 ├── AGENTS.md                   # This file (canonical org-wide rules)
 ├── README.md
 └── LICENSE                     # AGPL-3.0-or-later
 ```
 
-Sibling repos (`.github`, `website`, `my`, `common`, `server`) live **next to** this folder on the host. The devcontainer bind-mounts each of them at `/workspaces/<name>` so the multi-root workspace sees them via `../<name>`.
+Sibling repos (`.github`, `website`, `my`, `common`, `server`) each live on their own named
+Docker volume, cloned into place by `setup-container.sh` on first run (empty volume) — not
+bind-mounted from the host, so this works identically on GitHub Codespaces and local Docker
+Desktop/WSL2. The multi-root workspace sees them via `../<name>` inside the container.
 
 ### What NOT to do here
 
 - Do **not** add runtime code, packages, or build outputs. This repo is configuration only.
 - Do **not** duplicate per-repo agent rules — they live in their own `AGENTS.md`.
-- When adding a new sibling repo, update `repos.json`, `feature-today.code-workspace`, and `.devcontainer/devcontainer.json` together.
+- When adding a new sibling repo, update `FT_REPOS` in `.devcontainer/devcontainer.json`,
+  its `mounts` entry, and `feature-today.code-workspace` together.
 
 ## Repository Links
 
@@ -195,3 +193,7 @@ This document inherits the spirit of [`helpers4/.dev/AGENTS.md`](https://github.
 - License: AGPL-3.0-or-later (instead of LGPL-3.0)
 - Framework: Qwik 2 + QwikCity (instead of generic TS lib)
 - Linter/formatter: oxlint + oxc-formatter (Prettier dropped for trust reasons)
+- Orchestration: sibling repos clone into named Docker volumes via
+  `postCreateCommand` (matching `brig-id/roots`/`tuxery/.dev`), not the
+  `repos.json`+`scripts/`+`package.json` layer this repo used to have
+- `phases/*.md` tracks implementation phases across the org — no equivalent in helpers4

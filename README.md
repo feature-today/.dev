@@ -59,30 +59,13 @@ code .dev/feature-today.code-workspace
 
 When prompted, *Reopen in Container* — or run **Dev Containers: Reopen in Container** from the command palette. The container:
 
-- bind-mounts `.dev/` at `/workspaces/feature-today-dev`
-- bind-mounts each sibling repo at `/workspaces/<name>`
+- bind-mounts `.dev/` at `/workspaces/.dev`
+- gives each sibling repo its own named Docker volume at `/workspaces/<name>` (not a host bind-mount — this is what makes it work identically on GitHub Codespaces, no host pre-clone needed)
 - runs [`setup-container.sh`](./.devcontainer/setup-container.sh) on first start to:
-  - clone any sibling repo missing on the host (Codespaces fallback)
+  - clone any sibling repo into its volume if empty (fresh volume / first run)
   - run `pnpm install` in every sibling that has a `package.json`
 
-### 4. Cross-repo commands
-
-From `.dev/`, run any of:
-
-```bash
-pnpm run install:all      # pnpm install in every sibling
-pnpm run build:all
-pnpm run test:all
-pnpm run lint:all
-pnpm run fmt.check:all
-pnpm run typecheck:all
-pnpm run status:all       # git status -sb in every repo
-pnpm run fetch:all
-pnpm run pull:all
-pnpm run branch:all
-```
-
-Powered by [`scripts/run-each.mjs`](./scripts/run-each.mjs) and [`scripts/git-each.mjs`](./scripts/git-each.mjs).
+There's no bundled cross-repo command runner — use plain `git`/`gh`/`pnpm` per repo, or a one-liner like `for d in */; do (cd "$d" && git status -sb); done` from the parent directory.
 
 ## Stack
 
