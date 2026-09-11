@@ -11,14 +11,14 @@ All repos are bind-mounted at `/workspaces/<name>` and open together in
 
 | Path | Repo | Role |
 | ---- | ---- | ---- |
-| `/workspaces/.dev` | `.dev` | Orchestration — canonical AGENTS.md, devcontainer, scripts |
+| `/workspaces/feature-today-dev` | `.dev` | Orchestration — canonical AGENTS.md, devcontainer, scripts |
 | `/workspaces/.github` | `.github` | Org-wide GitHub config (workflows, templates) |
 | `/workspaces/website` | `website` | Marketing landing page (Qwik + Vercel Edge) |
 | `/workspaces/my` | `my` | The application (Qwik + Vercel Edge) |
 | `/workspaces/common` | `common` | Shared TypeScript library |
 | `/workspaces/server` | `server` | Placeholder — backend API (currently in `my` via QwikCity) |
 
-## Cross-repo commands (run from `/workspaces/.dev`)
+## Cross-repo commands (run from `/workspaces/feature-today-dev`)
 
 ```bash
 pnpm run status:all   # git status -sb in every repo
@@ -32,7 +32,7 @@ pnpm run test:all     # pnpm test in every repo
 ## Common gotchas
 
 **Commit scopes**: always read `scopes.json` at the active repo root before choosing a scope.
-Never invent a scope that isn't listed. Full type→emoji mapping: `/workspaces/.dev/commit-convention.json`.
+Never invent a scope that isn't listed. Full type→emoji mapping: `/workspaces/feature-today-dev/commit-convention.json`.
 Use `/commit` (Claude Code slash command) to auto-generate a message from staged changes.
 
 **Linting/formatting**: this org uses **oxlint**, not ESLint, and **oxc-formatter**
@@ -56,5 +56,7 @@ See AGENTS.md's Git Workflow section.
 
 ## AI persistence
 
-`~/.claude` is bind-mounted from the host and symlinked at every container start by
-`claude-dev`. Memory, credentials, and settings survive all rebuilds.
+`~/.claude` is bind-mounted from a **per-devcontainer** volume and symlinked at
+every container start by `claude-dev` — isolated to this project, not shared
+with any other org's devcontainer. Memory, credentials, and settings survive
+rebuilds of this same devcontainer.

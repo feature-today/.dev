@@ -59,7 +59,7 @@ code .dev/feature-today.code-workspace
 
 When prompted, *Reopen in Container* — or run **Dev Containers: Reopen in Container** from the command palette. The container:
 
-- bind-mounts `.dev/` at `/workspaces/.dev`
+- bind-mounts `.dev/` at `/workspaces/feature-today-dev`
 - bind-mounts each sibling repo at `/workspaces/<name>`
 - runs [`setup-container.sh`](./.devcontainer/setup-container.sh) on first start to:
   - clone any sibling repo missing on the host (Codespaces fallback)
