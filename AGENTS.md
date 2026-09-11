@@ -114,6 +114,10 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
 - Releases are tracked with **tags on `main`** (there's no merge commit to mark them, since every
   merge is a fast-forward).
 
+Always create the branch (`git checkout -b <name>`) before the first commit — never commit while
+on `main` and rename the branch afterward, which can leave its upstream tracking pointed at
+`origin/main` and let a later push land directly on `main` unnoticed.
+
 The agent never merges — not even a fast-forward merge. Push a branch and open the PR; a human
 merges it. A narrow, temporary carve-out (e.g. "push straight to `main` for this one fix") may be
 granted in conversation for a specific piece of work — treat it as scoped to exactly what was
