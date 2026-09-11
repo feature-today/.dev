@@ -6,11 +6,23 @@ project-specific details (scopes, structure, commands) on top of what is defined
 
 ## ⛔ CRITICAL RESTRICTIONS
 
-- **NEVER execute `git push`** — The user pushes manually after review.
-- **NEVER execute `git commit` or `git add`** — The user stages and commits manually. Fix files, then stop. Wait for an explicit "commit" instruction.
-- **NEVER use GPT models** — Use Claude models only (claude-sonnet-4.x, Claude Opus 4.x+).
+- **Git workflow** — branch, commit, push, and PR per the default policy in
+  [Git Workflow](#git-workflow) below; never merge (see that section).
 - **Everything in English** — Code, comments, commits, documentation, logs, PR descriptions.
 - **License is AGPL-3.0-or-later** for every feature-today repo (commercial exception to be added later via NOTICE/CLA).
+
+## Code Comments
+
+Write comments for someone reading the code cold — they never see the diff or the previous
+version, only what's in front of them. Describe what the code *is* and *why* it's that way,
+never what changed to get there.
+
+- ❌ `contents: write # was read-only — this job now also commits X`
+- ✅ `contents: write # commits X`
+
+If a comment needs "was"/"before"/"previously"/"now" (or a timestamp: "as of writing", "since
+last month") to make sense, that content belongs in the commit message or PR description, not
+the code — it rots the moment someone reads the file without the diff in front of them.
 
 ## Organization Context
 
@@ -101,6 +113,11 @@ Every merge is **rebase + fast-forward only** — no merge commits, no squash me
   new `main` before its own merge — fast-forward tolerates no divergence.
 - Releases are tracked with **tags on `main`** (there's no merge commit to mark them, since every
   merge is a fast-forward).
+
+The agent never merges — not even a fast-forward merge. Push a branch and open the PR; a human
+merges it. A narrow, temporary carve-out (e.g. "push straight to `main` for this one fix") may be
+granted in conversation for a specific piece of work — treat it as scoped to exactly what was
+said, never as a standing precedent to reuse elsewhere or later without asking again.
 
 ## License Header
 
