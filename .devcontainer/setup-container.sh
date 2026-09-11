@@ -7,8 +7,10 @@
 #
 # ───────────────────────────────────────────────────────────────────────────────
 # For every sibling repo declared in $FT_REPOS, ensure it exists at
-# /workspaces/<repo>. If the bind-mount target is empty (Codespaces or
-# fresh machine), fall back to `gh repo clone` (or `git clone`).
+# /workspaces/<repo>. Each sibling lives on its own named Docker volume; on a
+# fresh volume (first-ever run, or after `docker volume rm`) the target is
+# empty, so this clones it via `gh repo clone` (or `git clone`). A plain
+# container rebuild keeps whatever was already cloned/committed there.
 # pnpm install is handled by the package-auto-install feature (autoDiscover).
 # ───────────────────────────────────────────────────────────────────────────────
 set -euo pipefail
@@ -37,4 +39,3 @@ done
 echo ""
 echo "🎉 feature-today orchestrator ready."
 echo "   Open feature-today.code-workspace to load every repo at once."
-echo "   Try: pnpm run status:all | pull:all | branch:all"

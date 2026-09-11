@@ -1,15 +1,18 @@
 {
   "name": "feature-today",
   "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
-  "workspaceFolder": "/workspaces/feature-today-dev",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/feature-today-dev,type=bind,consistency=cached",
+  "workspaceFolder": "/workspaces/.dev",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/.dev,type=bind,consistency=cached",
   "mounts": [
-    // ── sibling repos ────────────────────────────────────────────────────────
-    "source=${localWorkspaceFolder}/../.github,target=/workspaces/.github,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../website,target=/workspaces/website,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../my,target=/workspaces/my,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../common,target=/workspaces/common,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../server,target=/workspaces/server,type=bind,consistency=cached"
+    // ── sibling repos — named Docker volumes, not host bind-mounts, so this
+    // works identically on GitHub Codespaces (no host pre-clone needed) and
+    // local Docker Desktop/WSL2. setup-container.sh clones into each volume
+    // on first run only. ─────────────────────────────────────────────────────
+    "source=feature-today-repo-.github,target=/workspaces/.github,type=volume",
+    "source=feature-today-repo-website,target=/workspaces/website,type=volume",
+    "source=feature-today-repo-my,target=/workspaces/my,type=volume",
+    "source=feature-today-repo-common,target=/workspaces/common,type=volume",
+    "source=feature-today-repo-server,target=/workspaces/server,type=volume"
   ],
   "containerEnv": {
     "FT_ORG": "feature-today",

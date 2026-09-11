@@ -6,33 +6,31 @@ context.
 
 ## Workspace layout
 
-All repos are bind-mounted at `/workspaces/<name>` and open together in
-`feature-today.code-workspace`:
+All repos are cloned as siblings at `/workspaces/<name>` by
+`.devcontainer/setup-container.sh`'s `postCreateCommand` (not host bind-mounted
+— that's what makes the devcontainer work on GitHub Codespaces as well as
+local Docker Desktop/WSL2), and open together in `feature-today.code-workspace`.
+Each sibling other than `.dev` lives on its own named Docker volume (see
+`devcontainer.json`'s `mounts`), so a plain "Rebuild Container" keeps
+uncommitted/unpushed work; only a full teardown (`docker volume rm`, deleted
+Codespace) resets it to a fresh clone of `origin/main`. `.dev` itself is the
+one repo that's genuinely host bind-mounted, so it's unaffected either way.
+**This is a safety net, not a substitute for pushing** — commit and push
+before anything that could destroy the underlying Docker volumes.
 
 | Path | Repo | Role |
 | ---- | ---- | ---- |
-| `/workspaces/feature-today-dev` | `.dev` | Orchestration — canonical AGENTS.md, devcontainer, scripts |
+| `/workspaces/.dev` | `.dev` | Orchestration — canonical AGENTS.md, devcontainer |
 | `/workspaces/.github` | `.github` | Org-wide GitHub config (workflows, templates) |
 | `/workspaces/website` | `website` | Marketing landing page (Qwik + Vercel Edge) |
 | `/workspaces/my` | `my` | The application (Qwik + Vercel Edge) |
 | `/workspaces/common` | `common` | Shared TypeScript library |
 | `/workspaces/server` | `server` | Placeholder — backend API (currently in `my` via QwikCity) |
 
-## Cross-repo commands (run from `/workspaces/feature-today-dev`)
-
-```bash
-pnpm run status:all   # git status -sb in every repo
-pnpm run fetch:all    # git fetch --all --prune in every repo
-pnpm run pull:all     # git pull --rebase in every repo
-pnpm run branch:all   # show active branch in every repo
-pnpm run build:all    # pnpm build in every repo
-pnpm run test:all     # pnpm test in every repo
-```
-
 ## Common gotchas
 
 **Commit scopes**: always read `scopes.json` at the active repo root before choosing a scope.
-Never invent a scope that isn't listed. Full type→emoji mapping: `/workspaces/feature-today-dev/commit-convention.json`.
+Never invent a scope that isn't listed. Full type→emoji mapping: `/workspaces/.dev/commit-convention.json`.
 Use `/commit` (Claude Code slash command) to auto-generate a message from staged changes.
 
 **Linting/formatting**: this org uses **oxlint**, not ESLint, and **oxc-formatter**
