@@ -1,10 +1,10 @@
 [
-  "devcontainer",
-  "workspace",
-  "scripts",
-  "agents",
+  "ai",
   "ci",
-  "docs",
   "deps",
-  "phases"
+  "devcontainer",
+  "docs",
+  "phases",
+  "scripts",
+  "workspace"
 ]
