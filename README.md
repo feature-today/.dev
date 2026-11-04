@@ -62,7 +62,6 @@ When prompted, *Reopen in Container* — or run **Dev Containers: Reopen in Cont
 - bind-mounts `.dev/` at `/workspaces/.dev`
 - clones the org repos at `/workspaces/<name>` (`org-workspace` feature)
 - runs [`setup-container.sh`](./.devcontainer/setup-container.sh) on first start to:
-  - clone any sibling repo missing on the host (Codespaces fallback)
   - run `pnpm install` in every sibling that has a `package.json`
 
 ### 4. Cross-repo commands
