@@ -8,11 +8,10 @@
   // (feature-today.code-workspace) is kept up to date by the same feature.
   "workspaceFolder": "/workspaces/.dev",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/.dev,type=bind,consistency=cached",
-  "containerEnv": {
-    "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
-  },
   // GH_TOKEN: forwards the host gh CLI token into the container so gh and the
   // GitHub VS Code extensions are authenticated out of the box.
+  // Secrets live in remoteEnv, not containerEnv: they are not baked into the container
+  // (docker run args / docker inspect) and a rotated token needs a reconnect, not a rebuild.
   "remoteEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
