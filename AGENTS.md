@@ -129,7 +129,7 @@ The `auto-header` devcontainer feature (or `psi-header` VS Code extension) is co
 └── LICENSE                     # AGPL-3.0-or-later
 ```
 
-Sibling repos (`.github`, `website`, `my`, `common`, `server`) live **next to** this folder on the host. The devcontainer bind-mounts each of them at `/workspaces/<name>` so the multi-root workspace sees them via `../<name>`.
+Sibling repos (`.github`, `website`, `my`, `common`, `server`, …) are cloned by the `org-workspace` devcontainer feature at `/workspaces/<name>`, next to this folder, so the multi-root workspace sees them via `../<name>`.
 
 ### What NOT to do here
 
