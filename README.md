@@ -61,27 +61,7 @@ When prompted, *Reopen in Container* — or run **Dev Containers: Reopen in Cont
 
 - bind-mounts `.dev/` at `/workspaces/.dev`
 - clones the org repos at `/workspaces/<name>` (`org-workspace` feature)
-- runs [`setup-container.sh`](./.devcontainer/setup-container.sh) on first start to:
-  - run `pnpm install` in every sibling that has a `package.json`
-
-### 4. Cross-repo commands
-
-From `.dev/`, run any of:
-
-```bash
-pnpm run install:all      # pnpm install in every sibling
-pnpm run build:all
-pnpm run test:all
-pnpm run lint:all
-pnpm run fmt.check:all
-pnpm run typecheck:all
-pnpm run status:all       # git status -sb in every repo
-pnpm run fetch:all
-pnpm run pull:all
-pnpm run branch:all
-```
-
-Powered by [`scripts/run-each.mjs`](./scripts/run-each.mjs) and [`scripts/git-each.mjs`](./scripts/git-each.mjs).
+- runs `pnpm install` in every sibling that has a `package.json` (`package-auto-install` feature)
 
 ## Stack
 

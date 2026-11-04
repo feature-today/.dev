@@ -1,22 +1,13 @@
 {
   "name": "Feature Today",
-  "image": "mcr.microsoft.com/devcontainers/typescript-node:24",
+  "image": "mcr.microsoft.com/devcontainers/typescript-node:26",
   // Orchestrator devcontainer for the feature-today organization.
   //
-  // Bind-mounts every sibling feature-today repo from the host (../<name>) into
-  // /workspaces/<name>. The multi-root workspace (feature-today.code-workspace)
-  // references each sibling via "../<name>", which resolves to the bind
-  // mount inside the container and to the real sibling folder on host.
-  //
-  // Falls back to `git clone` inside the container if a sibling repo is
-  // missing on host (e.g. GitHub Codespaces) — see setup-container.sh.
+  // The sibling feature-today repos are cloned by the org-workspace feature
+  // into /workspaces/<name>, next to this project, and the multi-root workspace
+  // (feature-today.code-workspace) is kept up to date by the same feature.
   "workspaceFolder": "/workspaces/.dev",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/.dev,type=bind,consistency=cached",
-  "mounts": [
-    // Shared pnpm store volume — persists across rebuilds and between sibling devcontainers.
-    // store-dir is configured in setup-container.sh via ~/.npmrc (pnpm 10/11 compatible).
-    "source=global-devcontainer-pnpm-store,target=/.pnpm-store,type=volume"
-  ],
   "containerEnv": {
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
@@ -37,7 +28,7 @@
     "ghcr.io/devcontainers/features/git-lfs:1": {},
     // ── helpers4 features ─────────────────────────────────────────────────────
     "ghcr.io/helpers4/devcontainer/dotfiles-sync:1": {},
-    "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
+    "ghcr.io/helpers4/devcontainer/shell-history:1": {},
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
     "ghcr.io/helpers4/devcontainer/claude-dev:1": {
@@ -47,13 +38,13 @@
     "ghcr.io/helpers4/devcontainer/github-dev:1": {},
     "ghcr.io/helpers4/devcontainer/typescript-dev:1": {},
     "ghcr.io/helpers4/devcontainer/vite-plus:1": {},
-    "ghcr.io/helpers4/devcontainer/package-auto-install:1": {},
+    "ghcr.io/helpers4/devcontainer/pnpm-store:1": {},
+    "ghcr.io/helpers4/devcontainer/package-auto-install:1": {
+      "autoDiscover": true
+    },
     "ghcr.io/helpers4/devcontainer/auto-header:1": {
       "projectName": "feature-today",
       "license": "AGPL-3.0-or-later"
-    },
-    "ghcr.io/helpers4/devcontainer/peon-ping:1": {
-      "packs": "peasant_fr,peon_fr,warcraft-peon"
     }
   },
   "customizations": {
@@ -96,6 +87,5 @@
       "onAutoForward": "silent"
     }
   },
-  "remoteUser": "node",
-  "postCreateCommand": "bash .devcontainer/setup-container.sh"
+  "remoteUser": "node"
 }
