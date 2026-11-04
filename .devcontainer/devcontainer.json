@@ -13,18 +13,11 @@
   "workspaceFolder": "/workspaces/.dev",
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/.dev,type=bind,consistency=cached",
   "mounts": [
-    "source=${localWorkspaceFolder}/../.github,target=/workspaces/.github,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../website,target=/workspaces/website,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../my,target=/workspaces/my,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../common,target=/workspaces/common,type=bind,consistency=cached",
-    "source=${localWorkspaceFolder}/../server,target=/workspaces/server,type=bind,consistency=cached",
     // Shared pnpm store volume — persists across rebuilds and between sibling devcontainers.
     // store-dir is configured in setup-container.sh via ~/.npmrc (pnpm 10/11 compatible).
     "source=global-devcontainer-pnpm-store,target=/.pnpm-store,type=volume"
   ],
   "containerEnv": {
-    "FT_ORG": "feature-today",
-    "FT_REPOS": ".github website my common server",
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
   // GH_TOKEN: forwards the host gh CLI token into the container so gh and the
@@ -33,6 +26,9 @@
     "GH_TOKEN": "${localEnv:GH_TOKEN_FOR_FEATURE_TODAY}"
   },
   "features": {
+    "ghcr.io/helpers4/devcontainer/org-workspace:1": {
+      "autoDiscover": "public,private,internal,fork"
+    },
     // moby:false → use upstream docker-ce CLI; required since the base image
     // moved to Debian trixie where moby-cli is no longer packaged.
     "ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
@@ -44,6 +40,10 @@
     "ghcr.io/helpers4/devcontainer/shell-history-per-project:1": {},
     "ghcr.io/helpers4/devcontainer/git-absorb:1": {},
     "ghcr.io/helpers4/devcontainer/essential-dev:1": {},
+    "ghcr.io/helpers4/devcontainer/claude-dev:1": {
+      "remoteControl": true,
+      "remoteControlAutoTrust": true
+    },
     "ghcr.io/helpers4/devcontainer/github-dev:1": {},
     "ghcr.io/helpers4/devcontainer/typescript-dev:1": {},
     "ghcr.io/helpers4/devcontainer/vite-plus:1": {},

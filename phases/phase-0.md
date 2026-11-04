@@ -13,7 +13,7 @@ Stand up the central orchestration repos so every other feature-today repo can p
 
 - [x] `.dev/feature-today.code-workspace` exposes the 6 folders
 - [x] `.dev/.devcontainer/devcontainer.json` consumes helpers4 features
-- [x] `.dev/.devcontainer/setup-container.sh` clones missing siblings + runs pnpm install
+- [x] `.dev/.devcontainer/setup-container.sh` runs pnpm install on siblings (cloned by the `org-workspace` feature)
 - [x] `.dev/scripts/{repos,run-each,git-each}.mjs` work cross-repo
 - [x] `.dev/repos.json` lists `[.github, website, my, common, server]`
 - [x] `.dev/AGENTS.md` canonical org-wide rules (AGPL, English, Conventional Commits + gitmoji, restrictions)
