@@ -51,8 +51,6 @@
         "ms-vscode-remote.remote-containers",
         "oxc.oxc-vscode",
         "qwik.qwik-vscode",
-        "streetsidesoftware.code-spell-checker",
-        "timonwong.shellcheck",
         "tamasfe.even-better-toml",
         "usernamehw.errorlens",
         "eamodio.gitlens"
