@@ -1,5 +1,8 @@
 {
   "name": "Feature Today",
+  // Stable machine name: Remote Control names the environment "<hostname>:<folder>", and the
+  // default hostname is the container id, which changes on every rebuild.
+  "runArgs": ["--hostname=feature-today"],
   "image": "mcr.microsoft.com/devcontainers/typescript-node:26",
   // Orchestrator devcontainer for the feature-today organization.
   //
